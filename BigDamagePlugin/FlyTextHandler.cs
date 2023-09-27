@@ -46,7 +46,7 @@ public unsafe class FlyTextHandler
     }
     private void flyTextCreationDetour(Character* target, Character* source, FlyTextKind logKind, byte option, byte actionKind, int actionId, int val1, int val2, byte damageType)
     {
-        if (ShouldConvert(GetFlyTextCharCategory(source)))
+        if (ShouldConvert(GetFlyTextCharCategory(source)) && IsShouldConvertkind(logKind))
         {
             float convertvalue = float.Floor(val1 * Plugin.c.Multiplier);
             this.flyTextCreationHook!.Original(target, source, ConvertKind(logKind), option, actionKind, actionId, (int)convertvalue, val2, damageType);
@@ -88,6 +88,30 @@ public unsafe class FlyTextHandler
             case FlyTextCharCategory.Others:
                 if (Plugin.c.Other) { return true; }
                 else { return false; }
+            default:
+                return false;
+        }
+    }
+    private bool IsShouldConvertkind(FlyTextKind kind)
+    {
+        switch (kind)
+        {
+            case FlyTextKind.AutoAttack:
+                return true;
+            case FlyTextKind.CriticalHit:
+                return true;
+            case FlyTextKind.DirectHit:
+                return true;
+            case FlyTextKind.CriticalDirectHit:
+                return true;
+            case FlyTextKind.NamedAttack:
+                return true;
+            case FlyTextKind.NamedCriticalHit:
+                return true;
+            case FlyTextKind.NamedDirectHit:
+                return true;
+            case FlyTextKind.NamedCriticalDirectHit:
+                return true;
             default:
                 return false;
         }
