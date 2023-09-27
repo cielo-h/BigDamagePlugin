@@ -1,0 +1,14 @@
+{
+    "Author": "C",
+    "Name": "BigDamage Plugin",
+    "Punchline": "This plugin makes you happy.",
+    "Description": "This plugin will show you the dream",
+    "InternalName": "BigDamagePlugin",
+    "ApplicableVersion": "any",
+    "RepoUrl": "https://github.com/cielo-h/BigDamagePlugin",
+    "Tags": [
+        "flytext",
+        "plugin",
+        "C"
+    ]
+}
