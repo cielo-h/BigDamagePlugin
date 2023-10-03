@@ -32,10 +32,10 @@ public unsafe class FlyTextHandler
         }
         catch (Exception ex)
         {
-            PluginLog.Error(ex, "Sig scan failed.");
+            Svc.Log.Error(ex, "Sig scan failed.");
             return;
         }
-        this.flyTextCreationHook = Hook<flyTextCreationDelegate>.FromAddress(flyTextCreationAddress, this.flyTextCreationDetour);
+        this.flyTextCreationHook = Svc.Hook.HookFromAddress<flyTextCreationDelegate>(flyTextCreationAddress, this.flyTextCreationDetour);
     }
     internal void SwitchHook()
     {
@@ -96,21 +96,21 @@ public unsafe class FlyTextHandler
     {
         switch (kind)
         {
-            case FlyTextKind.AutoAttack:
+            case FlyTextKind.AutoAttackOrDot:
                 return true;
-            case FlyTextKind.CriticalHit:
+            case FlyTextKind.AutoAttackOrDotCrit:
                 return true;
-            case FlyTextKind.DirectHit:
+            case FlyTextKind.AutoAttackOrDotDh:
                 return true;
-            case FlyTextKind.CriticalDirectHit:
+            case FlyTextKind.AutoAttackOrDotCritDh:
                 return true;
-            case FlyTextKind.NamedAttack:
+            case FlyTextKind.Damage:
                 return true;
-            case FlyTextKind.NamedCriticalHit:
+            case FlyTextKind.DamageCrit:
                 return true;
-            case FlyTextKind.NamedDirectHit:
+            case FlyTextKind.DamageDh:
                 return true;
-            case FlyTextKind.NamedCriticalDirectHit:
+            case FlyTextKind.DamageCritDh:
                 return true;
             default:
                 return false;
@@ -120,18 +120,18 @@ public unsafe class FlyTextHandler
     {
         switch (kind)
         {
-            case FlyTextKind.AutoAttack:
-                return FlyTextKind.CriticalDirectHit;
-            case FlyTextKind.CriticalHit:
-                return FlyTextKind.CriticalDirectHit;
-            case FlyTextKind.DirectHit:
-                return FlyTextKind.CriticalDirectHit;
-            case FlyTextKind.NamedAttack:
-                return FlyTextKind.NamedCriticalDirectHit;
-            case FlyTextKind.NamedCriticalHit:
-                return FlyTextKind.NamedCriticalDirectHit;
-            case FlyTextKind.NamedDirectHit:
-                return FlyTextKind.NamedCriticalDirectHit;
+            case FlyTextKind.AutoAttackOrDot:
+                return FlyTextKind.AutoAttackOrDotCritDh;
+            case FlyTextKind.AutoAttackOrDotCrit:
+                return FlyTextKind.AutoAttackOrDotCritDh;
+            case FlyTextKind.AutoAttackOrDotDh:
+                return FlyTextKind.AutoAttackOrDotCritDh;
+            case FlyTextKind.Damage:
+                return FlyTextKind.DamageCritDh;
+            case FlyTextKind.DamageCrit:
+                return FlyTextKind.DamageCritDh;
+            case FlyTextKind.DamageDh:
+                return FlyTextKind.DamageCritDh;
             default:
                 return kind;
         }

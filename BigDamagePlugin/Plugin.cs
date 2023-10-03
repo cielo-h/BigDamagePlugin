@@ -3,18 +3,18 @@ using Dalamud.Game.Command;
 using Dalamud.Interface.Windowing;
 using Dalamud.IoC;
 using Dalamud.Plugin;
+using Dalamud.Plugin.Services;
 using ECommons;
 
 namespace BigDamagePlugin
 {
     public sealed class Plugin : IDalamudPlugin
     {
-        internal static Plugin p;
+        internal static Plugin? p;
         public string Name => "BigDamage Plugin";
         private const string CommandName = "/big";
-
         private DalamudPluginInterface PluginInterface { get; init; }
-        private CommandManager CommandManager { get; init; }
+        private ICommandManager CommandManager { get; init; }
         public Configuration Configuration { get; init; }
         public WindowSystem WindowSystem = new("BigDamagePlugin");
         private MainWindow MainWindow { get; init; }
@@ -22,7 +22,7 @@ namespace BigDamagePlugin
         internal static Configuration c => p.Configuration;
         public Plugin(
             [RequiredVersion("1.0")] DalamudPluginInterface pluginInterface,
-            [RequiredVersion("1.0")] CommandManager commandManager)
+            [RequiredVersion("1.0")] ICommandManager commandManager)
         {
             this.PluginInterface = pluginInterface;
             this.CommandManager = commandManager;
