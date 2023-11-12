@@ -17,7 +17,7 @@ public class MainWindow : Window, IDisposable
 
     public override void Draw()
     {
-        int minvalue = 1; int maxvalue = 100;
+        int minvalue = 1; int maxvalue = 1000000;
         float mult = Plugin.c.Multiplier;
         if (ImGui.Checkbox("Enable", ref Plugin.c.Enabled))
         {
